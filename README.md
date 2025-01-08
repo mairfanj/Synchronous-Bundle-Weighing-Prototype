@@ -28,8 +28,7 @@ This project aims to streamline newspaper bundle weighing in a fast-paced produc
 ## 🚦 How to Get Started  
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/yourusername/Synchronous-Bundle-Weighing-Prototype.git
- 
+   git clone https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype.git
 2. Install dependencies (e.g., Arduino libraries for HX711, LoRa, etc.).
 3. Upload firmware to Master and Slave ESP32 devices.
 4. Follow the user manual in Documentation/user_manual.md.
