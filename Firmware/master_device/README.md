@@ -1,3 +1,10 @@
+What Master device do in summary:
+- Detect if the 3-key membrane keypad is connected.
+- Display master status and allow calibration input.
+- Capture weight for one copy of the newspaper.
+- Broadcast the calibration data to slaves via LoRa.
+- Display status on the LCD screen.
+
 📚 Explanation of the Code:
 
 ✅ 1. Initialization (setup())
