@@ -29,8 +29,6 @@ Each phase involves specific interactions between the devices and subsystems.
 
 ![Operation Phase](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/operation_flowchart.png?raw=true)
 
-```
-
 ### Explanation
 1. **Initialization Phase**:
    - Devices are powered on and initialized.
