@@ -13,7 +13,7 @@ This document provides a detailed guide for setting up, calibrating, and operati
 2. [Hardware Setup](#hardware-setup)
 3. [Software Setup](#software-setup)
 4. [Calibration and Operation](#calibration-and-operation)
-5. [Workflow Diagram]([#calibration-and-operation](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/Workflow_Diagram.md) (Will redirect to Documentation/Workflow_Diagram.md)
+5. [Workflow Diagram](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/Workflow_Diagram.md) (Will redirect to Documentation/Workflow_Diagram.md)
 6. [Troubleshooting](#troubleshooting)
 
 ---
