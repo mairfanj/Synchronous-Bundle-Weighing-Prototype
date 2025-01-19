@@ -1,4 +1,4 @@
-# User Manual for Master-Slave Device Firmware
+# User Manual for Synchronous Bundle Weighing Prototype
 
 This document provides a detailed guide for setting up, calibrating, and operating the Master-Slave Device system, which consists of:
 
