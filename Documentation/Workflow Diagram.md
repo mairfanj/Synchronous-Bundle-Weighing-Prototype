@@ -19,9 +19,15 @@ Each phase involves specific interactions between the devices and subsystems.
 
 1. **Initialization Phase**
 
+![Initialization Phase](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/initialized_phase_flowchart.png?raw=true)
+
 2. **Calibration Phase**
 
+![Calibration Phase](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/calibration_phase_flowchart.png?raw=true)
+
 3. **Operation Phase**
+
+![Operation Phase](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/operation_flowchart.png?raw=true)
 
 ```
 
