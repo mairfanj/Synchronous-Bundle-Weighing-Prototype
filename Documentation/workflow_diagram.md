@@ -1,6 +1,7 @@
 # Workflow Diagram
 
 This document illustrates the workflow of the **Synchronous Bundle Weighing Prototype** system, highlighting the interaction between the Master Device and Slave Device, along with the overall data flow.
+
 ![Full Workflow](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/full_flowchart_mermaid-2.png?raw=true)
 
 ## Key Interactions
