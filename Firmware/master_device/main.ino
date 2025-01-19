@@ -1,62 +1,66 @@
+#include "config.h"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <LoRa.h>
-
-// Pin Definitions
-#define KEYPAD_PIN 4       // Example pin for keypad connection
-#define LORA_SS 5          // LoRa SS pin
-#define LORA_RST 14        // LoRa reset pin
-#define LORA_DIO0 2        // LoRa DIO0 pin
+#include "HX711.h"
 
 // LCD Display
-LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C Address for LCD
+LiquidCrystal_I2C lcd(LCD_I2C_ADDR, LCD_COLUMNS, LCD_ROWS);
 
-// Keypad Flags
-bool isMaster = false;
-
-// Weight Measurement (Placeholder, replace with actual sensor logic)
-float copyWeight = 0.0;
+// Load Cell
+HX711 scale;
 
 // State Management
 enum State { INIT, CALIBRATE, BROADCAST, IDLE };
 State currentState = INIT;
 
+// Variables
+float copyWeight = 0.0; // Calibration weight for one copy
+bool isMaster = false;  // Master mode flag
+
 void setup() {
-  Serial.begin(115200);
-  
+  Serial.begin(SERIAL_BAUD_RATE);
+
   // Initialize LCD
   lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
   lcd.print("Initializing...");
-  
+
   // Initialize LoRa
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
-  if (!LoRa.begin(433E6)) {
+  if (!LoRa.begin(LORA_FREQUENCY)) {
     lcd.setCursor(0, 1);
     lcd.print("LoRa Failed!");
     while (1);
   }
-  
   lcd.setCursor(0, 1);
   lcd.print("LoRa OK!");
 
-  // Check if Keypad is Connected (Master Mode Check)
+  // Initialize HX711
+  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  if (!scale.is_ready()) {
+    lcd.clear();
+    lcd.print("HX711 Error!");
+    while (1);
+  }
+  scale.tare();
+
+  // Check if keypad is connected
   pinMode(KEYPAD_PIN, INPUT_PULLUP);
   if (digitalRead(KEYPAD_PIN) == LOW) {
     isMaster = true;
     lcd.clear();
     lcd.print("Mode: Master");
     delay(2000);
+    currentState = CALIBRATE;
   } else {
     lcd.clear();
     lcd.print("No Keypad Found");
     lcd.setCursor(0, 1);
     lcd.print("Slave Mode Only");
-    while (1); // Halt, as it's not in master mode
+    while (1);
   }
-
-  currentState = CALIBRATE;
 }
 
 void loop() {
@@ -68,37 +72,36 @@ void loop() {
       broadcastCalibration();
       break;
     case IDLE:
-      lcd.setCursor(0, 0);
-      lcd.print("Master: IDLE");
-      delay(1000);
+      idleState();
+      break;
+    default:
       break;
   }
 }
 
-// ----------------------- Functions -----------------------
-
-// Function: Calibrate Device
 void calibrateDevice() {
   lcd.clear();
   lcd.print("Calibrate...");
   lcd.setCursor(0, 1);
   lcd.print("Place 1 Copy");
 
-  // Simulate Weight Input
-  delay(5000); // Wait for user to place a copy (replace with sensor code)
-  copyWeight = 300.5; // Example weight in grams
+  delay(5000); // Wait for user to place a copy
 
-  lcd.clear();
-  lcd.print("Weight: ");
-  lcd.print(copyWeight);
-  lcd.print("g");
-
-  delay(2000); // Wait for confirmation
-
-  currentState = BROADCAST;
+  if (scale.is_ready()) {
+    copyWeight = scale.get_units(10); // Average of 10 readings
+    lcd.clear();
+    lcd.print("Weight: ");
+    lcd.print(copyWeight);
+    lcd.print("g");
+    delay(2000);
+    currentState = BROADCAST;
+  } else {
+    lcd.clear();
+    lcd.print("HX711 Error");
+    delay(2000);
+  }
 }
 
-// Function: Broadcast Calibration Data
 void broadcastCalibration() {
   lcd.clear();
   lcd.print("Broadcasting...");
@@ -110,8 +113,12 @@ void broadcastCalibration() {
 
   lcd.setCursor(0, 1);
   lcd.print("Sent to Slaves");
-
   delay(2000);
   currentState = IDLE;
 }
- 
+
+void idleState() {
+  lcd.clear();
+  lcd.print("Master: IDLE");
+  delay(1000);
+}
