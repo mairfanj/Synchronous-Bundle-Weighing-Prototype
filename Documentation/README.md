@@ -1,9 +1,9 @@
-# User Manual for Synchronous Bundle Weighing Prototype
+# User Manual for Master-Slave Device Firmware
 
 This document provides a detailed guide for setting up, calibrating, and operating the Master-Slave Device system, which consists of:
 
-- **Master Device**: Sends calibration data and manages overall communication.
-- **Slave Device**: Measures bundle weights, calculates copy counts, and transmits data to a central computer.
+- **Master Device**: Sends calibration data and manages overall communication, including using a load cell for calibration weight measurement.
+- **Slave Device**: Processes bundle weights, calculates copy counts, and transmits data to a central computer.
 
 ---
 
@@ -22,12 +22,13 @@ This document provides a detailed guide for setting up, calibrating, and operati
 The Master-Slave Device system is designed for real-time measurement and data transmission. Key functionalities include:
 
 - **Master Device**:
-  - Sends calibration weights to the slave.
+  - Uses a load cell to determine calibration weight.
+  - Sends calibration weights to the Slave Device.
   - Acts as a communication hub.
 
 - **Slave Device**:
-  - Receives calibration weights.
-  - Measures bundle weights.
+  - Uses a load cell to measure bundle weights.
+  - Calculates the number of copies in each bundle.
   - Displays real-time data on an LCD.
   - Sends data to a central system via LoRa.
 
@@ -38,17 +39,19 @@ The Master-Slave Device system is designed for real-time measurement and data tr
 ### 1. Components Required
 
 #### Master Device
-- LoRa module
-- LCD (I2C)
-- Keypad (optional)
-- Microcontroller (e.g., ESP32, Arduino)
+- ESP32 microcontroller
+- LoRa SX1278 module
+- HX711 load cell amplifier
+- 50 kg load cell
+- LCD1602 (I2C interface)
+- 3-button membrane keypad
 
 #### Slave Device
-- LoRa module
-- LCD (I2C)
+- ESP32 microcontroller
+- LoRa SX1278 module
 - HX711 load cell amplifier
-- Load cell sensor
-- Microcontroller (e.g., ESP32, Arduino)
+- 50 kg load cell
+- LCD1602 (I2C interface)
 
 ### 2. Wiring Diagram
 
@@ -58,9 +61,11 @@ The Master-Slave Device system is designed for real-time measurement and data tr
 | LoRa SS           | GPIO 5           |
 | LoRa RST          | GPIO 14          |
 | LoRa DIO0         | GPIO 2           |
-| LCD SDA           | GPIO (default)   |
-| LCD SCL           | GPIO (default)   |
-| Keypad (Optional) | GPIO 4           |
+| HX711 DOUT        | GPIO 16          |
+| HX711 SCK         | GPIO 17          |
+| LCD SDA           | GPIO 21          |
+| LCD SCL           | GPIO 22          |
+| Keypad            | GPIO 4           |
 
 #### Slave Device
 | Component         | Pin Connections  |
@@ -70,8 +75,8 @@ The Master-Slave Device system is designed for real-time measurement and data tr
 | LoRa DIO0         | GPIO 2           |
 | HX711 DOUT        | GPIO 4           |
 | HX711 SCK         | GPIO 15          |
-| LCD SDA           | GPIO (default)   |
-| LCD SCL           | GPIO (default)   |
+| LCD SDA           | GPIO 21          |
+| LCD SCL           | GPIO 22          |
 
 ---
 
@@ -100,9 +105,9 @@ Ensure `config.h` matches your hardware configuration. Adjust pin numbers and ot
 
 ### 1. Calibration Phase
 1. Power on both devices.
-2. On the Master Device, input the calibration weight using the keypad.
-3. The Slave Device will display "Waiting Calib..." until it receives calibration data.
-4. Once calibration data is received, the Slave Device displays the weight per copy.
+2. On the Master Device, place a single copy on its load cell for calibration.
+3. The Master Device measures the weight and broadcasts the calibration data to the Slave Device.
+4. The Slave Device updates its internal configuration with the received calibration weight.
 
 ### 2. Measurement Phase
 1. Place a bundle on the load cell connected to the Slave Device.
@@ -145,4 +150,3 @@ Ensure `config.h` matches your hardware configuration. Adjust pin numbers and ot
 ---
 
 *End of User Manual*
- 
