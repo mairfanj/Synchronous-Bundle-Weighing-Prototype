@@ -13,7 +13,8 @@ This document provides a detailed guide for setting up, calibrating, and operati
 2. [Hardware Setup](#hardware-setup)
 3. [Software Setup](#software-setup)
 4. [Calibration and Operation](#calibration-and-operation)
-5. [Troubleshooting](#troubleshooting)
+5. [Workflow Diagram](#calibration-and-operation) (Will redirect to Documentation/
+6. [Troubleshooting](#troubleshooting)
 
 ---
 
