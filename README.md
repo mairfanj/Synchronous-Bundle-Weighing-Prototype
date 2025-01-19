@@ -23,7 +23,8 @@ This project aims to streamline newspaper bundle weighing in a fast-paced produc
 - Data Logging: Periodic logging to CSV/Excel via Serial communication.
 
 ## 📊 Workflow Diagram  
-![Workflow Diagram](./Images/circuit_diagram.png)
+![Workflow Diagram](https://github.com/mairfanj/Synchronous-Bundle-Weighing-Prototype/blob/main/Documentation/Workflow_Diagram.md) (Redirect to Documentation
+/Workflow_Diagram.md)
 
 ## 🚦 How to Get Started  
 1. Clone the repository:  
