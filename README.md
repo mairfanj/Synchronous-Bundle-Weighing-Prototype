@@ -38,8 +38,8 @@ This project aims to streamline newspaper bundle weighing in a fast-paced produc
 You can simulate parts of this project using Wokwi.
 Open the Wokwi project file from Simulation/wokwi_project.json.
 
-## 🤝 Contributions
+## Contributions
 Contributions are welcome! Please read the CONTRIBUTING.md for details.
 
-## 📄 License
+## License
 This project is licensed under the MIT License.
